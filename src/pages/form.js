@@ -28,7 +28,7 @@ export default class Form extends React.Component {
     hair_color: "blonde"
   }
 
-  startReport = () => this.setState({ formInProgress: true })
+  startReport = () => this.setState({ formInProgress: true });
   handleReportType = reportType => this.setState({ reportType })
 
   handleLocation = location => {
@@ -110,10 +110,12 @@ export default class Form extends React.Component {
           room_number,
           date_observed,
           time_observed,
+          location_observed,
           room_number,
           room_registered_name,
           age_observed,
           gender,
+          race,
           ethnicity,
           hair_color,
           noteable_features,
@@ -151,7 +153,7 @@ export default class Form extends React.Component {
               </div>
             )}
             <form>
-              {formPosition > 0 && (
+              {formPosition > 0 && formPosition < 4 && (
                 <div className="rack-form__breadcrumbs">
                   <div
                     className={`crumb ${formPosition === 1 ? "-active" : ""}`}
@@ -304,22 +306,26 @@ export default class Form extends React.Component {
                           suspicion_type: reportType,
                           date_observed: date,
                           time_observed: time,
-                          // location_observed: location,
+                          location_observed: location,
                           room_number: roomNumber,
                           room_registered_name: guestName,
                           age_observed: age,
                           gender,
-                          // race,
+                          race,
                           ethnicity,
                           hair_color: hairColor,
                           noteable_features: standoutFeatures,
                           license_state: licenseNumber,
-                          license_number: licenseState
+                          license_number: licenseState,
                         },
                       },
                     })
-                    .then(resp => console.log({ resp }))
-                    .catch(err => console.log(err))
+                      .then(resp => {
+                        const id = resp.data.id
+                        console.log(id)
+                        this.setState({ formPosition: 4 })
+                      })
+                      .catch(err => console.log(err))
                   }
                   className="rack-app__button rack-app__button--primary"
                 >
@@ -332,6 +338,12 @@ export default class Form extends React.Component {
                   className="rack-app__button rack-app__button--primary"
                 >
                   Next
+                </div>
+              )}
+              {formPosition === 4 && (
+                <div className="rack-form__submit-success">
+                  <h3>Success!</h3>
+                  <p>Law enforcement has received your report and will look into it right away.</p>
                 </div>
               )}
             </form>
