@@ -65,9 +65,13 @@ export default class Form extends React.Component {
       <div className="rack-app rack-form">
         <header>
           <span>SAR</span>
-          <div onClick={this.hideForm}><Hide /></div>
+          <div onClick={this.hideForm}>
+            <Hide />
+          </div>
         </header>
-        {formHidden && <div className="rack-form__hide" onClick={this.showForm} />}
+        {formHidden && (
+          <div className="rack-form__hide" onClick={this.showForm} />
+        )}
         {formPosition === 0 && (
           <div className={`rack-form__intro`}>
             <h1>Submit a Report</h1>
@@ -82,9 +86,19 @@ export default class Form extends React.Component {
           </div>
         )}
         <form>
+          {formPosition > 0 && (
+            <div className="rack-form__breadcrumbs">
+              {/* Make this a loop, each one needs an "active" class when the formPosition === index
+              add clickhandler to each to navigate to setState({ formPosition: index }) */}
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
+          )}
           {formPosition === 1 && (
             <section className="rack-form__section rack-form__report-type">
-              <h3>First things first.</h3>
+              <h3>First things first</h3>
               <ReportType
                 label="This report includes details about:"
                 selected={reportType}
@@ -98,7 +112,11 @@ export default class Form extends React.Component {
               <TextInput
                 onValueChange={this.handleDate}
                 value={date}
-                label={reportType === "room" ? "Date of suspicious activity:" : "Date last seen:"}
+                label={
+                  reportType === "room"
+                    ? "Date of suspicious activity:"
+                    : "Date last seen:"
+                }
                 placeholder="Enter date"
               />
               <TextInput
@@ -112,7 +130,7 @@ export default class Form extends React.Component {
                 value={location}
                 reportType={reportType}
               />
-            {location === "room" && (
+              {location === "room" && (
                 <div>
                   <TextInput
                     onValueChange={this.handleRoomNumber}

@@ -4,6 +4,10 @@
   font-size: 15px;
   overflow: scroll;
 
+  p {
+    text-align: center;
+  }
+
   &__hide {
     position: absolute;
     z-index: 10;
@@ -26,9 +30,31 @@
     justify-content: center;
   }
 
+  &__breadcrumbs {
+    margin-top: 80px;
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    > div {
+      width: 16px;
+      height: 16px;
+      margin: 6px;
+      background: @white;
+      border: 1px solid @dark-grey;
+      border-radius: 32px;
+      // this will become "active" class, add transitions
+      &:first-of-type {
+        border: 1px solid @black;
+        background: @black;
+      }
+    }
+  }
+
   &__section {
+    padding: 0 40px 0 40px;
     margin-top: 40px;
-    padding: 40px 40px 0 40px;
   }
 
   &__input {
@@ -72,7 +98,6 @@
       }
     } 
   }
-
 
 
 }
