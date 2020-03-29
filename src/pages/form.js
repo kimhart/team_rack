@@ -25,10 +25,10 @@ export default class Form extends React.Component {
     location: "lobby",
     ethnicity: "American Indian or Alaska Native",
     race: "Hispanic or Latino",
-    hair_color: "blonde"
+    hair_color: "blonde",
   }
 
-  startReport = () => this.setState({ formInProgress: true });
+  startReport = () => this.setState({ formInProgress: true })
   handleReportType = reportType => this.setState({ reportType })
 
   handleLocation = location => {
@@ -64,11 +64,15 @@ export default class Form extends React.Component {
 
   showForm = () => this.setState({ formHidden: false })
 
-  handleBreadcrumb = index => this.setState({ formPosition: index });
+  handleBreadcrumb = index => this.setState({ formPosition: index })
 
-  handleLicenseNumber = licenseNumber => this.setState({licenseNumber});
+  handleLicenseNumber = licenseNumber => this.setState({ licenseNumber })
 
-  handleLicenseState = licenseState => this.setState({licenseState});
+  handleLicenseState = licenseState => this.setState({ licenseState })
+
+  onFileChangeHandler = event => {
+    this.setState({ upload: event.target.files[0] })
+  }
 
   render() {
     const {
@@ -88,7 +92,7 @@ export default class Form extends React.Component {
       hairColor,
       standoutFeatures,
       licenseNumber,
-      licenseState
+      licenseState,
     } = this.state
     const humanDescription =
       reportType === "criminal" || reportType === "victim"
@@ -96,7 +100,7 @@ export default class Form extends React.Component {
 
     const FILE_UPLOAD = gql`
       mutation FileUpload($file: Upload!, $sarId: ID!) {
-        addSuspiciousActivityReport(file: $file, sarId: $sarId) {
+        uploadFile(file: $file, sarId: $sarId) {
           url
         }
       }
@@ -107,246 +111,281 @@ export default class Form extends React.Component {
           id
           suspicion_type
           date_observed
-          room_number,
-          date_observed,
-          time_observed,
-          location_observed,
-          room_number,
-          room_registered_name,
-          age_observed,
-          gender,
-          race,
-          ethnicity,
-          hair_color,
-          noteable_features,
-          license_state,
+          room_number
+          date_observed
+          time_observed
+          location_observed
+          room_number
+          room_registered_name
+          age_observed
+          gender
+          race
+          ethnicity
+          hair_color
+          noteable_features
+          license_state
           license_number
         }
       }
     `
     return (
-      <Mutation mutation={SUBMIT_FORM}>
-        {submitForm => (
-          <div className="rack-app rack-form">
-            <header>
-              <Logo />
-              <div onClick={this.hideForm}>
-                <Hide />
-              </div>
-            </header>
-            {formHidden && (
-              <div onClick={this.showForm} className="rack-form__hide">
-                <Image />
-              </div>
-            )}
-            {formPosition === 0 && (
-              <div className={`rack-form__intro`}>
-                <h1>Submit a Report</h1>
-                <h2>This will only take 1-2 minutes.</h2>
-                <div
-                  onClick={this.advanceForm}
-                  className="rack-app__button rack-app__button--dark"
-                >
-                  Let's Go
-                  <Chevron />
-                </div>
-              </div>
-            )}
-            <form>
-              {formPosition > 0 && formPosition < 4 && (
-                <div className="rack-form__breadcrumbs">
-                  <div
-                    className={`crumb ${formPosition === 1 ? "-active" : ""}`}
-                    onClick={() => this.handleBreadcrumb(1)}
-                  />
-                  <div
-                    className={`crumb ${formPosition === 2 ? "-active" : ""}`}
-                    onClick={() => this.handleBreadcrumb(2)}
-                  />
-                  <div
-                    className={`crumb ${formPosition === 3 ? "-active" : ""}`}
-                    onClick={() => this.handleBreadcrumb(3)}
-                  />
-                </div>
-              )}
-              {formPosition === 1 && (
-                <section className="rack-form__section rack-form__report-type">
-                  <h3>Report Type</h3>
-                  <ReportType
-                    label="This includes details about:"
-                    selected={reportType}
-                    handleReportType={this.handleReportType}
-                  />
-                </section>
-              )}
-              {formPosition === 2 && (
-                <section className="rack-form__section rack-form__time-location">
-                  <h3>When & Where</h3>
-                  <TextInput
-                    onValueChange={this.handleDate}
-                    value={date}
-                    label={
-                      reportType === "room"
-                        ? "Date of suspicious activity:"
-                        : "Date last seen:"
-                    }
-                    placeholder="Enter date"
-                  />
-                  <TextInput
-                    onValueChange={this.handleTime}
-                    value={time}
-                    label="Approximate time noticed:"
-                    placeholder="Enter time"
-                  />
-                  {reportType !== "room" && (
-                    <Location
-                      onValueChange={this.handleLocation}
-                      value={location}
-                      reportType={reportType}
-                    />
-                  )}
-                  {(location === "room" || reportType === "room") && (
-                    <div>
-                      <TextInput
-                        onValueChange={this.handleRoomNumber}
-                        value={roomNumber}
-                        label="Room number:"
-                        placeholder="Enter room #"
+      <Mutation mutation={FILE_UPLOAD}>
+        {uploadFile => (
+          <Mutation mutation={SUBMIT_FORM}>
+            {submitForm => (
+              <div className="rack-app rack-form">
+                <header>
+                  <Logo />
+                  <div onClick={this.hideForm}>
+                    <Hide />
+                  </div>
+                </header>
+                {formHidden && (
+                  <div onClick={this.showForm} className="rack-form__hide">
+                    <Image />
+                  </div>
+                )}
+                {formPosition === 0 && (
+                  <div className={`rack-form__intro`}>
+                    <h1>Submit a Report</h1>
+                    <h2>This will only take 1-2 minutes.</h2>
+                    <div
+                      onClick={this.advanceForm}
+                      className="rack-app__button rack-app__button--dark"
+                    >
+                      Let's Go
+                      <Chevron />
+                    </div>
+                  </div>
+                )}
+                <form>
+                  {formPosition > 0 && formPosition < 4 && (
+                    <div className="rack-form__breadcrumbs">
+                      <div
+                        className={`crumb ${
+                          formPosition === 1 ? "-active" : ""
+                        }`}
+                        onClick={() => this.handleBreadcrumb(1)}
                       />
-                      <TextInput
-                        onValueChange={this.handleGuestName}
-                        value={guestName}
-                        label="Name registered to room (optional):"
-                        placeholder="Enter first & last name"
+                      <div
+                        className={`crumb ${
+                          formPosition === 2 ? "-active" : ""
+                        }`}
+                        onClick={() => this.handleBreadcrumb(2)}
+                      />
+                      <div
+                        className={`crumb ${
+                          formPosition === 3 ? "-active" : ""
+                        }`}
+                        onClick={() => this.handleBreadcrumb(3)}
                       />
                     </div>
                   )}
-                  {location === "other" && (
-                    <TextInput
-                      onValueChange={this.handleCustomLocation}
-                      value={customLocation}
-                      label="Please specify the incident's location:"
-                      placeholder="Pool, restaurant, gym, etc..."
-                    />
+                  {formPosition === 1 && (
+                    <section className="rack-form__section rack-form__report-type">
+                      <h3>Report Type</h3>
+                      <ReportType
+                        label="This includes details about:"
+                        selected={reportType}
+                        handleReportType={this.handleReportType}
+                      />
+                    </section>
                   )}
-                </section>
-              )}
-              {formPosition === 3 && (
-                <section className="rack-form__section rack-form__person-description">
-                  <h3>{reportType} Description</h3>
-                  {reportType === "room" && (
-                    <TextArea
-                      label="What's happening?"
-                      onValueChange={this.handleSuspiciousRoomBehavior}
-                      tall
-                      placeholder="Several unregistered visitors in & out, sounds of distress, suspicious conversation, etc..."
-                    />
-                  )}
-                  {humanDescription && (
-                    <>
-                      <Gender
-                        onValueChange={this.handleGender}
-                        selected={gender}
-                        horizontal
-                        label="Gender"
-                      />
-                      <Age
-                        onValueChange={this.handleAge}
-                        label="Age Range"
-                        selected={age}
-                        reportType={reportType}
-                      />
-                      <Race
-                        onValueChange={this.handleRace}
-                        label="Race"
-                        selected={race}
-                      />
-                      <Ethnicity
-                        onValueChange={this.handleEthnicity}
-                        label="Ethnicity"
-                        selected={ethnicity}
-                      />
-                      <HairColor
-                        onValueChange={this.handleHairColor}
-                        label="Hair Color"
-                        selected={hairColor}
-                      />
-                      <TextArea
-                        onValueChange={this.handleStandoutFeatures}
-                        value={standoutFeatures}
-                        label="Any standout features?"
-                        placeholder="Tattoos, piercings, glasses, speech characteristics, jewelry, clothing, etc..."
-                      />
-                    </>
-                  )}
-                  {vehicleDescription && (
-                    <>
+                  {formPosition === 2 && (
+                    <section className="rack-form__section rack-form__time-location">
+                      <h3>When & Where</h3>
                       <TextInput
-                        label="License Plate #"
-                        placeholder="Enter number"
-                        value={licenseNumber}
-                        onValueChange={this.handleLicenseNumber}
+                        onValueChange={this.handleDate}
+                        value={date}
+                        label={
+                          reportType === "room"
+                            ? "Date of suspicious activity:"
+                            : "Date last seen:"
+                        }
+                        placeholder="Enter date"
                       />
                       <TextInput
-                        label="License Plate State"
-                        value={licenseState}
-                        placeholder="Enter State (CA, NY, etc)"
-                        onValueChange={this.handleLicenseState}
+                        onValueChange={this.handleTime}
+                        value={time}
+                        label="Approximate time noticed:"
+                        placeholder="Enter time"
                       />
-                    </>
+                      {reportType !== "room" && (
+                        <Location
+                          onValueChange={this.handleLocation}
+                          value={location}
+                          reportType={reportType}
+                        />
+                      )}
+                      {(location === "room" || reportType === "room") && (
+                        <div>
+                          <TextInput
+                            onValueChange={this.handleRoomNumber}
+                            value={roomNumber}
+                            label="Room number:"
+                            placeholder="Enter room #"
+                          />
+                          <TextInput
+                            onValueChange={this.handleGuestName}
+                            value={guestName}
+                            label="Name registered to room (optional):"
+                            placeholder="Enter first & last name"
+                          />
+                        </div>
+                      )}
+                      {location === "other" && (
+                        <TextInput
+                          onValueChange={this.handleCustomLocation}
+                          value={customLocation}
+                          label="Please specify the incident's location:"
+                          placeholder="Pool, restaurant, gym, etc..."
+                        />
+                      )}
+                    </section>
                   )}
-                </section>
-              )}
-              {formPosition === 3 && (
-                <div
-                  onClick={() =>
-                    submitForm({
-                      variables: {
-                        report: {
-                          suspicion_type: reportType,
-                          date_observed: date,
-                          time_observed: time,
-                          location_observed: location,
-                          room_number: roomNumber,
-                          room_registered_name: guestName,
-                          age_observed: age,
-                          gender,
-                          race,
-                          ethnicity,
-                          hair_color: hairColor,
-                          noteable_features: standoutFeatures,
-                          license_state: licenseNumber,
-                          license_number: licenseState,
-                        },
-                      },
-                    })
-                      .then(resp => {
-                        console.log({resp})
-                        this.setState({ formPosition: 4 })
-                      })
-                      .catch(err => console.log(err))
-                  }
-                  className="rack-app__button rack-app__button--primary"
-                >
-                  Submit
-                </div>
-              )}
-              {formPosition > 0 && formPosition < 3 && (
-                <div
-                  onClick={this.advanceForm}
-                  className="rack-app__button rack-app__button--primary"
-                >
-                  Next
-                </div>
-              )}
-              {formPosition === 4 && (
-                <div className="rack-form__submit-success">
-                  <h3>Success!</h3>
-                  <p>Law enforcement has received your report and will look into it right away.</p>
-                </div>
-              )}
-            </form>
-          </div>
+                  {formPosition === 3 && (
+                    <section className="rack-form__section rack-form__person-description">
+                      <h3>{reportType} Description</h3>
+                      {reportType === "room" && (
+                        <TextArea
+                          label="What's happening?"
+                          onValueChange={this.handleSuspiciousRoomBehavior}
+                          tall
+                          placeholder="Several unregistered visitors in & out, sounds of distress, suspicious conversation, etc..."
+                        />
+                      )}
+                      {humanDescription && (
+                        <>
+                          <Gender
+                            onValueChange={this.handleGender}
+                            selected={gender}
+                            horizontal
+                            label="Gender"
+                          />
+                          <Age
+                            onValueChange={this.handleAge}
+                            label="Age Range"
+                            selected={age}
+                            reportType={reportType}
+                          />
+                          <Race
+                            onValueChange={this.handleRace}
+                            label="Race"
+                            selected={race}
+                          />
+                          <Ethnicity
+                            onValueChange={this.handleEthnicity}
+                            label="Ethnicity"
+                            selected={ethnicity}
+                          />
+                          <HairColor
+                            onValueChange={this.handleHairColor}
+                            label="Hair Color"
+                            selected={hairColor}
+                          />
+                          <input
+                            type="file"
+                            name="file"
+                            onChange={this.onFileChangeHandler}
+                          />
+                          <TextArea
+                            onValueChange={this.handleStandoutFeatures}
+                            value={standoutFeatures}
+                            label="Any standout features?"
+                            placeholder="Tattoos, piercings, glasses, speech characteristics, jewelry, clothing, etc..."
+                          />
+                        </>
+                      )}
+                      {vehicleDescription && (
+                        <>
+                          <TextInput
+                            label="License Plate #"
+                            placeholder="Enter number"
+                            value={licenseNumber}
+                            onValueChange={this.handleLicenseNumber}
+                          />
+                          <TextInput
+                            label="License Plate State"
+                            value={licenseState}
+                            placeholder="Enter State (CA, NY, etc)"
+                            onValueChange={this.handleLicenseState}
+                          />
+                          <input
+                            type="file"
+                            name="file"
+                            onChange={this.onFileChangeHandler}
+                          />
+                        </>
+                      )}
+                    </section>
+                  )}
+                  {formPosition === 3 && (
+                    <div
+                      onClick={() =>
+                        submitForm({
+                          variables: {
+                            report: {
+                              suspicion_type: reportType,
+                              date_observed: date,
+                              time_observed: time,
+                              location_observed: location,
+                              room_number: roomNumber,
+                              room_registered_name: guestName,
+                              age_observed: age,
+                              gender,
+                              race,
+                              ethnicity,
+                              hair_color: hairColor,
+                              noteable_features: standoutFeatures,
+                              license_state: licenseNumber,
+                              license_number: licenseState,
+                            },
+                          },
+                        })
+                          .then(resp => {
+                            console.log({ resp })
+                            this.setState({ formPosition: 4 })
+                            const { upload } = this.state
+                            if (upload) {
+                              const {
+                                id,
+                              } = resp.data.addSuspiciousActivityReport
+                              uploadFile({
+                                variables: {
+                                  sarId: id,
+                                  file: upload,
+                                },
+                              }).then(resp => console.log(resp))
+                            }
+                          })
+                          .catch(err => console.log(err))
+                      }
+                      className="rack-app__button rack-app__button--primary"
+                    >
+                      Submit
+                    </div>
+                  )}
+                  {formPosition > 0 && formPosition < 3 && (
+                    <div
+                      onClick={this.advanceForm}
+                      className="rack-app__button rack-app__button--primary"
+                    >
+                      Next
+                    </div>
+                  )}
+                  {formPosition === 4 && (
+                    <div className="rack-form__submit-success">
+                      <h3>Success!</h3>
+                      <p>
+                        Law enforcement has received your report and will look
+                        into it right away.
+                      </p>
+                    </div>
+                  )}
+                </form>
+              </div>
+            )}
+          </Mutation>
         )}
       </Mutation>
     )
