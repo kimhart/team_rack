@@ -321,8 +321,7 @@ export default class Form extends React.Component {
                       },
                     })
                       .then(resp => {
-                        const id = resp.data.id
-                        console.log(id)
+                        console.log({resp})
                         this.setState({ formPosition: 4 })
                       })
                       .catch(err => console.log(err))
