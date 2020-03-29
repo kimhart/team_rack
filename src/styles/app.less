@@ -50,9 +50,9 @@
   }
 
   .icon--logo {
-    width: 90px;
+    width: 100px;
     fill: @white;
-    transform: translateY(5px);
+    transform: translateY(3px);
   }
 
   header {
@@ -72,6 +72,34 @@
       color: @white;
       font-family: @font-face-header;
       font-weight: @font-weight-bold;
+    }
+  }
+
+  &__main {
+    height: 100vh;
+    width: 100%;
+    background: @blue;
+    .icon--logo {
+      padding: 20px;
+      width: 160px;
+    }
+    &-links {
+      padding-top: 100px;
+      margin: 0 auto;
+      text-align: center;
+      a, a:hover, a:active {
+        display: block;
+        transition: all .3s ease;
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-decoration: none;
+        color: @white;
+        font-family: @font-face-header;
+        font-weight: @font-weight-black;
+      }
+      a:hover {
+        color: @black;
+      }
     }
   }
 

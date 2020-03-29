@@ -1,46 +1,16 @@
 import React from "react"
-import { graphql } from "gatsby"
-// import { useQuery } from "@apollo/react-hooks"
-// import gql from "graphql-tag"
 import "../styles/main.less"
+import { Link } from "gatsby";
+import Logo from "../components/logo";
 
-export const rackAPI = graphql`
-  {
-    rackAPI {
-      victims {
-        name
-      }
-    }
-  }
-`
-
-// This query is executed at run time by Apollo.
-// const GET_REPORTS = gql`
-//   {
-//     suspiciousActivityReport {
-//       id
-//       suspicion_type
-//       date_observed
-//       room_number
-//     }
-//   }
-// `
-
-export default ({
-  data: {
-    rackAPI: { victims },
-  },
-}) => {
-  // const { data } = useQuery(GET_REPORTS);
+export default () => {
   return (
-    <div className="rack-app">
-      <h1>Victims</h1>
-      {victims?.map((victim, i) => (
-        <h3 key={i}>{victim.name}</h3>
-      ))}
-      {/* {data?.suspiciousActivityReport?.map((report, i) => (
-        <div key={i}>{report.suspicion_type}</div>
-      ))} */}
+    <div className="rack-app rack-app__main">
+      <Logo />
+      <div className="rack-app__main-links">
+        <Link to="/form">Submit a Report</Link>
+        <Link to="/dashboard">View Dashboard</Link>
+      </div>
     </div>
   )
 }
