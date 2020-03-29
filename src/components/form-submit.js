@@ -6,14 +6,8 @@ const FormSubmit = data => {
   console.log(data)
 
   const SUBMIT_FORM = gql`
-    mutation {
-      addSuspiciousActivityReport(
-        report: {
-          suspicion_type: "victim"
-          room_number: "10"
-          date_observed: "2020-03-29"
-        }
-      ) {
+    mutation SubmitForm($report: SuspiciousActivityReport) {
+      addSuspiciousActivityReport(report: $report) {
         id
         suspicion_type
         date_observed
@@ -21,9 +15,8 @@ const FormSubmit = data => {
       }
     }
   `
-  const submit = useMutation(SUBMIT_FORM);
-  console.log(submit())
-
+  const SubmitForm = useMutation(SUBMIT_FORM)
+  console.log(SubmitForm({ date_observed: "2020-03-28" }))
 }
 
 export default FormSubmit
