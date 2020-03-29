@@ -61,6 +61,12 @@ export default class Form extends React.Component {
 
   handleBreadcrumb = (index) => this.setState({ formPosition: index});
 
+  submitForm = () => {
+    const query = {
+    
+    }
+  }
+
   render() {
     const { reportType, date, time, location, roomNumber, guestName, customLocation, formPosition, formHidden, gender, age, race, ethnicity, hairColor, standoutFeatures } = this.state;
     const humanDescription = reportType === "criminal" || reportType === "victim";

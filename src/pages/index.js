@@ -1,10 +1,10 @@
 import React from "react"
 import { graphql } from "gatsby"
-// import { useQuery } from "@apollo/react-hooks"
-// import gql from "graphql-tag"
+import { useQuery } from "@apollo/react-hooks"
+import gql from "graphql-tag"
 import "../styles/main.less"
 
-export const AllVictimsQuery = graphql`
+export const rackAPI = graphql`
   {
     rackAPI {
       victims {
@@ -15,31 +15,32 @@ export const AllVictimsQuery = graphql`
 `
 
 // This query is executed at run time by Apollo.
-// const APOLLO_QUERY = gql`
-//   {
-//     meme(where: { id: "cjke2xlf9nhd90953khilyzja" }) {
-//       photo {
-//         url(
-//           transformation: {
-//             image: { resize: { width: 600, height: 600, fit: crop } }
-//           }
-//         )
-//       }
-//     }
-//   }
-// `
-
+const GET_REPORTS = gql`
+  {
+    suspiciousActivityReport {
+      id
+      suspicion_type
+      date_observed
+      room_number
+    }
+  }
+`
 
 export default ({
   data: {
     rackAPI: { victims },
   },
 }) => {
-  // const { loading, error, data } = useQuery(APOLLO_QUERY)
+  const { data } = useQuery(GET_REPORTS);
   return (
     <div className="rack-app">
-    <h1>Victims</h1>
-    {victims.map((victim, i) => <h3 key={i}>{victim.name}</h3>)}
+      <h1>Victims</h1>
+      {victims?.map((victim, i) => (
+        <h3 key={i}>{victim.name}</h3>
+      ))}
+      {data?.suspiciousActivityReport?.map((report, i) => (
+        <div key={i}>{report.suspicion_type}</div>
+      ))}
     </div>
   )
 }
