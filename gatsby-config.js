@@ -28,14 +28,6 @@ module.exports = {
         icon: `./src/images/favicon-16x16.png`, // This path is relative to the root of the site.
       },
     },
-    // {
-    //   resolve: "gatsby-source-graphql",
-    //   options: {
-    //     typeName: "RMAPI",
-    //     fieldName: "rickAndMorty",
-    //     url: "https://rickandmortyapi.com/graphql",
-    //   },
-    // },
     {
       resolve: "gatsby-source-graphql",
       options: {

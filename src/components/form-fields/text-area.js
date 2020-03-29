@@ -1,13 +1,12 @@
 import React from "react"
 
-const TextInput = props => {
+const TextArea = props => {
   const handleValueChange = e => props.onValueChange(e.target.value)
-  const { placeholder, value, label } = props;
+  const { placeholder, value, label } = props
   return (
-    <div className="rack-form--text-input">
+    <div className="rack-form__input rack-form__input--textarea">
       <label>{label}</label>
-      <input
-        type="text"
+      <textarea
         placeholder={placeholder}
         value={value}
         onChange={handleValueChange}
@@ -16,4 +15,4 @@ const TextInput = props => {
   )
 }
 
-export default TextInput;
+export default TextArea

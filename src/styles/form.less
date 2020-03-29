@@ -1,40 +1,65 @@
 @import "./variables.less";
 
 .rack-form {
-  margin: 0 auto;
-  max-width: 800px;
+  font-size: 15px;
+  overflow: scroll;
 
   &__intro {
-    opacity: 1;
-    visibility: visible;
-    transition: all .3s ease;
-    &.-hide {
-      opacity: 0;
-      visibility: hidden;
-    }
+    background: @blue;
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
-  &--radio-group { 
-    label {
-      display: block;
-      margin-bottom: 16px;
-    }
-    input[type=radio] {
-      margin-right: 8px;
-    }
+  &__section {
+    margin-top: 40px;
+    padding: 40px 40px 0 40px;
   }
 
-  &--text-input,
-  &--select-input {
-    input {
-      border: 1px solid @grey;
-      border-radius: 4px;
-      width: 100%;
-      padding: 8px;
-      margin: 16px 0;
+  &__input {
+    margin: 24px 0;
+
+    &--radio-group { 
+      p {
+        margin: 16px 0;
+        display: block;
+        font-weight: @font-weight-bold;
+      }
+      label {
+        cursor: pointer;
+        display: block;
+        margin-bottom: 16px;
+      }
+      input[type=radio] {
+        margin-right: 8px;
+      }
+      &.-horizontal {
+        label {
+          display: inline;
+          margin-right: 24px;
+        }
+      }
     }
 
-  } 
+    &--text,
+    &--textarea,
+    &--select {
+      label {
+        margin-bottom: 8px;
+        display: block;
+        font-weight: @font-weight-bold;
+      }
+      input, select, textarea {
+        border: 1px solid @grey;
+        border-radius: 4px;
+        width: 100%;
+        padding: 8px;
+      }
+    } 
+  }
 
 
 

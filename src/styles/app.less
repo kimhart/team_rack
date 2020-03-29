@@ -1,15 +1,73 @@
 @import "./variables.less";
 
 .rack-app {
-  padding: 20px;
+  height: 100vh;
+  overflow: hidden;
+
   * {
-    font-family: @font-face;
+    font-family: @font-face-regular;
     font-weight: @font-weight-normal;
     color: @black;
   }
 
   h1 {
-    font-weight: @font-weight-semibold;
+    font-weight: @font-weight-black;
+    font-family: @font-face-header;
+    color: @white;
+    font-size: 42px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 16px;
+    text-align: center;
+    margin: 0 0 16px 0;
+    color: @white;
+    font-weight: @font-weight-bold;
+  }
+
+  h3 {
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 24px;
+    color: @blue;
+    font-family: @font-face-header;
+    font-weight: @font-weight-bold;
+  }
+
+  .icon--chevron {
+    width: 12px;
+    height: 12px;
+    fill: @white;
+    svg {
+      margin-bottom: 1px;
+    }
+  }
+
+  .icon--hide {
+    width: 22px;
+    height: 22px;
+    fill: @white;
+  }
+
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52px;
+    background: @black;
+    box-shadow: 5px 5px 12px @grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    span {
+      font-size: 14px;
+      color: @white;
+      font-family: @font-face-header;
+      font-weight: @font-weight-bold;
+    }
   }
 
   &__button {
@@ -20,13 +78,49 @@
     padding: 8px 24px;
     transition: all .3s ease;
     margin: 20px auto;
+    font-weight: @font-weight-bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon--chevron {
+      margin-left: 8px;
+    }
     &--primary {
       background: @blue;
       color: @white;
       border: none;
-      font-weight: @font-weight-bold;
       &:hover {
         background: @black;
+      }
+    }
+
+    &--light {
+      background: @white;
+      color: @black;
+      .icon--chevron {
+        fill: @black;
+      }
+      &:hover {
+        background: @black;
+        color: @white;
+        .icon--chevron {
+          fill: @white;
+        }
+      }
+    }
+
+    &--dark {
+      background: @black;
+      color: @white;
+      .icon--chevron {
+        fill: @white;
+      }
+      &:hover {
+        background: @white;
+        color: @black;
+        .icon--chevron {
+          fill: @black;
+        }
       }
     }
   }

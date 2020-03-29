@@ -8,9 +8,7 @@ export const AllVictimsQuery = graphql`
   {
     rackAPI {
       victims {
-        id
-        firstName
-        lastName
+        name
       }
     }
   }
@@ -41,7 +39,7 @@ export default ({
   return (
     <div className="rack-app">
     <h1>Victims</h1>
-    {victims.map((victim, i) => <h3 key={i}>{victim.firstName}, {victim.lastName}</h3>)}
+    {victims.map((victim, i) => <h3 key={i}>{victim.name}</h3>)}
     </div>
   )
 }
