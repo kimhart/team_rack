@@ -1,0 +1,41 @@
+@import "./variables.less";
+
+.rack-form {
+  margin: 0 auto;
+  max-width: 800px;
+
+  &__intro {
+    opacity: 1;
+    visibility: visible;
+    transition: all .3s ease;
+    &.-hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  &--radio-group { 
+    label {
+      display: block;
+      margin-bottom: 16px;
+    }
+    input[type=radio] {
+      margin-right: 8px;
+    }
+  }
+
+  &--text-input,
+  &--select-input {
+    input {
+      border: 1px solid @grey;
+      border-radius: 4px;
+      width: 100%;
+      padding: 8px;
+      margin: 16px 0;
+    }
+
+  } 
+
+
+
+}

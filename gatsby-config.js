@@ -15,6 +15,7 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-less`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -27,13 +28,21 @@ module.exports = {
         icon: `./src/images/favicon-16x16.png`, // This path is relative to the root of the site.
       },
     },
+    // {
+    //   resolve: "gatsby-source-graphql",
+    //   options: {
+    //     typeName: "RMAPI",
+    //     fieldName: "rickAndMorty",
+    //     url: "https://rickandmortyapi.com/graphql",
+    //   },
+    // },
     {
       resolve: "gatsby-source-graphql",
       options: {
         typeName: "RMAPI",
-        fieldName: "rickAndMorty",
-        url: "https://rickandmortyapi.com/graphql",
+        fieldName: "rackAPI",
+        url: "https://rack-api.herokuapp.com/",
       },
-    }
+    },
   ],
 }

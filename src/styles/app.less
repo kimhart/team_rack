@@ -1,0 +1,33 @@
+@import "./variables.less";
+
+.rack-app {
+  padding: 20px;
+  * {
+    font-family: @font-face;
+    font-weight: @font-weight-normal;
+    color: @black;
+  }
+
+  h1 {
+    font-weight: @font-weight-semibold;
+  }
+
+  &__button {
+    width: 140px;
+    border-radius: 100px;
+    text-align: center;
+    cursor: pointer;
+    padding: 8px 24px;
+    transition: all .3s ease;
+    margin: 20px auto;
+    &--primary {
+      background: @blue;
+      color: @white;
+      border: none;
+      font-weight: @font-weight-bold;
+      &:hover {
+        background: @black;
+      }
+    }
+  }
+}
