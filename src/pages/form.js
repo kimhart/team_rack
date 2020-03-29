@@ -5,7 +5,6 @@ import TextInput from "../components/form-fields/text-input"
 import TextArea from "../components/form-fields/text-area"
 import Location from "../components/form-fields/location"
 import Gender from "../components/form-fields/gender"
-// import moment from "moment";
 import Chevron from "../components/chevron"
 import Logo from "../components/logo"
 import Hide from "../components/hide"
