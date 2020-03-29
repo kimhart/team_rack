@@ -3,7 +3,7 @@ import "../styles/main.less"
 import ReportType from "../components/form-fields/report-type"
 import TextInput from "../components/form-fields/text-input"
 import TextArea from "../components/form-fields/text-area"
-import IncidentLocation from "../components/form-fields/incident-location"
+import Location from "../components/form-fields/location"
 import Gender from "../components/form-fields/gender"
 // import moment from "moment";
 import Chevron from "../components/chevron";
@@ -48,7 +48,9 @@ export default class Form extends React.Component {
 
   advanceForm = () => {
     const { formPosition } = this.state;
-    this.setState({ formPosition: formPosition + 1})
+    if (formPosition < 3) {
+      this.setState({ formPosition: formPosition + 1})
+    }
   }
 
   hideForm = () => this.setState({ formHidden: true });
@@ -56,15 +58,16 @@ export default class Form extends React.Component {
   showForm = () => this.setState({ formHidden: false });
 
   render() {
-    const { reportType, date, time, location, roomNumber, guestName, customLocation, formPosition, gender, age, race, ethnicity, hairColor, standoutFeatures } = this.state;
+    const { reportType, date, time, location, roomNumber, guestName, customLocation, formPosition, formHidden, gender, age, race, ethnicity, hairColor, standoutFeatures } = this.state;
     const humanDescription = reportType === "criminal" || reportType === "victim";
     const vehicleDescription = reportType === "vehicle";
     return (
       <div className="rack-app rack-form">
         <header>
           <span>SAR</span>
-          <Hide onClick={this.hideForm} />
+          <div onClick={this.hideForm}><Hide /></div>
         </header>
+        {formHidden && <div className="rack-form__hide" onClick={this.showForm} />}
         {formPosition === 0 && (
           <div className={`rack-form__intro`}>
             <h1>Submit a Report</h1>
@@ -95,20 +98,21 @@ export default class Form extends React.Component {
               <TextInput
                 onValueChange={this.handleDate}
                 value={date}
-                label="Date of incident:"
+                label={reportType === "room" ? "Date of suspicious activity:" : "Date last seen:"}
                 placeholder="Enter date"
               />
               <TextInput
                 onValueChange={this.handleTime}
                 value={time}
-                label="Approximate time of incident:"
+                label="Approximate time seen:"
                 placeholder="Enter time"
               />
-              <IncidentLocation
+              <Location
                 onValueChange={this.handleLocation}
                 value={location}
+                reportType={reportType}
               />
-              {location === "room" && (
+            {location === "room" && (
                 <div>
                   <TextInput
                     onValueChange={this.handleRoomNumber}
@@ -120,7 +124,7 @@ export default class Form extends React.Component {
                     onValueChange={this.handleGuestName}
                     value={guestName}
                     label="Name registered to room (optional):"
-                    placeholder="First & Last Name"
+                    placeholder="Enter first & last name"
                   />
                 </div>
               )}

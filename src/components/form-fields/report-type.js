@@ -29,11 +29,11 @@ const ReportType = (props) => {
       <label>
         <input
           type="radio"
-          value="room-traffic"
-          checked={selected === "room-traffic"}
+          value="room"
+          checked={selected === "room"}
           onChange={handleReportType}
         />
-        A suspicious amount of visitors to a room
+        Suspicious activity in a room
       </label>
       <label>
         <input

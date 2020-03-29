@@ -4,6 +4,18 @@
   font-size: 15px;
   overflow: scroll;
 
+  &__hide {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background: @black;
+    height: 100vh;
+  }
+  
   &__intro {
     background: @blue;
     width: 100%;
