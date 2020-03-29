@@ -23,6 +23,9 @@ export default class Form extends React.Component {
     formPosition: 0,
     reportType: "criminal",
     location: "lobby",
+    ethnicity: "American Indian or Alaska Native",
+    race: "Hispanic or Latino",
+    hair_color: "blonde"
   }
 
   startReport = () => this.setState({ formInProgress: true })
@@ -61,7 +64,11 @@ export default class Form extends React.Component {
 
   showForm = () => this.setState({ formHidden: false })
 
-  handleBreadcrumb = index => this.setState({ formPosition: index })
+  handleBreadcrumb = index => this.setState({ formPosition: index });
+
+  handleLicenseNumber = licenseNumber => this.setState({licenseNumber});
+
+  handleLicenseState = licenseState => this.setState({licenseState});
 
   render() {
     const {
@@ -80,6 +87,8 @@ export default class Form extends React.Component {
       ethnicity,
       hairColor,
       standoutFeatures,
+      licenseNumber,
+      licenseState
     } = this.state
     const humanDescription =
       reportType === "criminal" || reportType === "victim"
@@ -98,7 +107,18 @@ export default class Form extends React.Component {
           id
           suspicion_type
           date_observed
-          room_number
+          room_number,
+          date_observed,
+          time_observed,
+          room_number,
+          room_registered_name,
+          age_observed,
+          gender,
+          ethnicity,
+          hair_color,
+          noteable_features,
+          license_state,
+          license_number
         }
       }
     `
@@ -149,9 +169,9 @@ export default class Form extends React.Component {
               )}
               {formPosition === 1 && (
                 <section className="rack-form__section rack-form__report-type">
-                  <h3>This is regarding:</h3>
+                  <h3>Report Type</h3>
                   <ReportType
-                    // label="This report includes details about:"
+                    label="This includes details about:"
                     selected={reportType}
                     handleReportType={this.handleReportType}
                   />
@@ -257,25 +277,56 @@ export default class Form extends React.Component {
                       />
                     </>
                   )}
-                  {vehicleDescription && <>car stuff</>}
+                  {vehicleDescription && (
+                    <>
+                      <TextInput
+                        label="License Plate #"
+                        placeholder="Enter number"
+                        value={licenseNumber}
+                        onValueChange={this.handleLicenseNumber}
+                      />
+                      <TextInput
+                        label="License Plate State"
+                        value={licenseState}
+                        placeholder="Enter State (CA, NY, etc)"
+                        onValueChange={this.handleLicenseState}
+                      />
+                    </>
+                  )}
                 </section>
               )}
-              <div
-                onClick={() =>
-                  submitForm({
-                    variables: {
-                      report: {
-                        suspicion_type: "victim",
-                        date_observed: "2010-01-21",
+              {formPosition === 3 && (
+                <div
+                  onClick={() =>
+                    submitForm({
+                      variables: {
+                        report: {
+                          suspicion_type: reportType,
+                          date_observed: date,
+                          time_observed: time,
+                          // location_observed: location,
+                          room_number: roomNumber,
+                          room_registered_name: guestName,
+                          age_observed: age,
+                          gender,
+                          // race,
+                          ethnicity,
+                          hair_color: hairColor,
+                          noteable_features: standoutFeatures,
+                          license_state: licenseNumber,
+                          license_number: licenseState
+                        },
                       },
-                    },
-                  }).then(resp => console.log({ resp }))
-                }
-                className="rack-app__button rack-app__button--primary"
-              >
-                Submit
-              </div>
-              {formPosition > 0 && (
+                    })
+                    .then(resp => console.log({ resp }))
+                    .catch(err => console.log(err))
+                  }
+                  className="rack-app__button rack-app__button--primary"
+                >
+                  Submit
+                </div>
+              )}
+              {formPosition > 0 && formPosition < 3 && (
                 <div
                   onClick={this.advanceForm}
                   className="rack-app__button rack-app__button--primary"

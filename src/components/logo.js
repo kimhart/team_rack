@@ -15,7 +15,7 @@ const Logo = () => {
           >
             <feOffset input="SourceAlpha" />
             <feGaussianBlur stdDeviation="5" result="blur" />
-            <feFlood flood-color="#ff4e00" />
+            <feFlood floodColor="#ff4e00" />
             <feComposite operator="in" in2="blur" />
             <feComposite in="SourceGraphic" />
           </filter>
@@ -29,7 +29,7 @@ const Logo = () => {
           >
             <feOffset input="SourceAlpha" />
             <feGaussianBlur stdDeviation="5" result="blur-2" />
-            <feFlood flood-color="#ff4e00" />
+            <feFlood floodColor="#ff4e00" />
             <feComposite operator="in" in2="blur-2" />
             <feComposite in="SourceGraphic" />
           </filter>
@@ -43,7 +43,7 @@ const Logo = () => {
           >
             <feOffset input="SourceAlpha" />
             <feGaussianBlur stdDeviation="5" result="blur-3" />
-            <feFlood flood-color="#ff4e00" />
+            <feFlood floodColor="#ff4e00" />
             <feComposite operator="in" in2="blur-3" />
             <feComposite in="SourceGraphic" />
           </filter>
@@ -57,7 +57,7 @@ const Logo = () => {
           >
             <feOffset input="SourceAlpha" />
             <feGaussianBlur stdDeviation="5" result="blur-4" />
-            <feFlood flood-color="#ff4e00" />
+            <feFlood floodColor="#ff4e00" />
             <feComposite operator="in" in2="blur-4" />
             <feComposite in="SourceGraphic" />
           </filter>
