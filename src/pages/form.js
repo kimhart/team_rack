@@ -98,9 +98,9 @@ export default class Form extends React.Component {
           )}
           {formPosition === 1 && (
             <section className="rack-form__section rack-form__report-type">
-              <h3>First things first</h3>
+              <h3>This is regarding:</h3>
               <ReportType
-                label="This report includes details about:"
+                // label="This report includes details about:"
                 selected={reportType}
                 handleReportType={this.handleReportType}
               />
@@ -122,15 +122,17 @@ export default class Form extends React.Component {
               <TextInput
                 onValueChange={this.handleTime}
                 value={time}
-                label="Approximate time seen:"
+                label="Approximate time noticed:"
                 placeholder="Enter time"
               />
-              <Location
-                onValueChange={this.handleLocation}
-                value={location}
-                reportType={reportType}
-              />
-              {location === "room" && (
+              {reportType !== "room" &&
+                <Location
+                  onValueChange={this.handleLocation}
+                  value={location}
+                  reportType={reportType}
+                />
+              }
+              {(location === "room" || reportType === "room") && (
                 <div>
                   <TextInput
                     onValueChange={this.handleRoomNumber}
