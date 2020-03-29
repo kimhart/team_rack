@@ -7,11 +7,13 @@ import Location from "../components/form-fields/location"
 import Gender from "../components/form-fields/gender"
 // import moment from "moment";
 import Chevron from "../components/chevron";
+import Logo from "../components/logo";
 import Hide from "../components/hide";
 import Age from "../components/form-fields/age";
 import Ethnicity from "../components/form-fields/ethnicity"
 import Race from "../components/form-fields/race"
 import HairColor from "../components/form-fields/hair-color"
+import Image from "../components/image";
 
 export default class Form extends React.Component {
 
@@ -57,6 +59,8 @@ export default class Form extends React.Component {
 
   showForm = () => this.setState({ formHidden: false });
 
+  handleBreadcrumb = (index) => this.setState({ formPosition: index});
+
   render() {
     const { reportType, date, time, location, roomNumber, guestName, customLocation, formPosition, formHidden, gender, age, race, ethnicity, hairColor, standoutFeatures } = this.state;
     const humanDescription = reportType === "criminal" || reportType === "victim";
@@ -64,13 +68,15 @@ export default class Form extends React.Component {
     return (
       <div className="rack-app rack-form">
         <header>
-          <span>SAR</span>
+          <Logo />
           <div onClick={this.hideForm}>
             <Hide />
           </div>
         </header>
         {formHidden && (
-          <div className="rack-form__hide" onClick={this.showForm} />
+          <div onClick={this.showForm} className="rack-form__hide">
+            <Image />
+          </div>
         )}
         {formPosition === 0 && (
           <div className={`rack-form__intro`}>
@@ -88,12 +94,18 @@ export default class Form extends React.Component {
         <form>
           {formPosition > 0 && (
             <div className="rack-form__breadcrumbs">
-              {/* Make this a loop, each one needs an "active" class when the formPosition === index
-              add clickhandler to each to navigate to setState({ formPosition: index }) */}
-              <div />
-              <div />
-              <div />
-              <div />
+              <div
+                className={`crumb ${formPosition === 1 ? "-active" : ""}`}
+                onClick={() => this.handleBreadcrumb(1)}
+              />
+              <div
+                className={`crumb ${formPosition === 2 ? "-active" : ""}`}
+                onClick={() => this.handleBreadcrumb(2)}
+              />
+              <div
+                className={`crumb ${formPosition === 3 ? "-active" : ""}`}
+                onClick={() => this.handleBreadcrumb(3)}
+              />
             </div>
           )}
           {formPosition === 1 && (
@@ -125,13 +137,13 @@ export default class Form extends React.Component {
                 label="Approximate time noticed:"
                 placeholder="Enter time"
               />
-              {reportType !== "room" &&
+              {reportType !== "room" && (
                 <Location
                   onValueChange={this.handleLocation}
                   value={location}
                   reportType={reportType}
                 />
-              }
+              )}
               {(location === "room" || reportType === "room") && (
                 <div>
                   <TextInput
@@ -161,6 +173,14 @@ export default class Form extends React.Component {
           {formPosition === 3 && (
             <section className="rack-form__section rack-form__person-description">
               <h3>{reportType} Description</h3>
+              {reportType === "room" && (
+                <TextArea
+                  label="What's happening?"
+                  onValueChange={this.handleSuspiciousRoomBehavior}
+                  tall
+                  placeholder="Several unregistered visitors in & out, sounds of distress, suspicious conversation, etc..."
+                />
+              )}
               {humanDescription && (
                 <>
                   <Gender

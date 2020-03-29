@@ -6,7 +6,7 @@ const ReportType = (props) => {
 
   return (
     <div className="rack-form__input rack-form__input--radio-group">
-      <p>{label}</p>
+      <p className="center">{label}</p>
       <label>
         <input
           type="radio"

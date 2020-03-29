@@ -4,7 +4,7 @@
   font-size: 16px;
   overflow: scroll;
 
-  p {
+  p.center {
     text-align: center;
   }
 
@@ -17,7 +17,8 @@
     left: 0;
     width: 100vw;
     background: @black;
-    height: 100vh;
+    min-height: 100vh;
+    overflow: scroll;
   }
   
   &__intro {
@@ -38,14 +39,14 @@
     align-items: center;
     width: 100%;
     > div {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       margin: 6px;
       background: @white;
       border: 1px solid @dark-grey;
-      border-radius: 32px;
+      border-radius: 28px;
       // this will become "active" class, add transitions
-      &:first-of-type {
+      &.-active {
         border: 1px solid @black;
         background: @black;
       }
@@ -54,7 +55,7 @@
 
   &__section {
     padding: 0 40px 0 40px;
-    margin-top: 40px;
+    margin-top: 20px;
   }
 
   &__input {
@@ -97,6 +98,14 @@
         padding: 8px;
       }
     } 
+
+    &--textarea {
+      &.-tall {
+        textarea {
+          min-height: 10em;
+        }
+      }
+    }
   }
 
 
